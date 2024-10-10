@@ -23,3 +23,14 @@ body {
 	color: var(--foreground);
 	background: var(--background);
 }
+
+.up-arrow {
+	width: 0;
+	height: 0;
+	border-left: 20% solid transparent;
+	border-right: 1rem solid transparent;
+
+	border-bottom: 1rem solid var(--foreground);
+
+	margin: .5rem;
+}

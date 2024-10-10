@@ -11,14 +11,19 @@ const config: Config = {
 			sans: "Rubik",
 			serif: "Permanent Marker",
 			card: "Mitr"
-	  },
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
-    },
-  },
+	  	},
+		extend: {
+			colors: {
+				background: "var(--background)",
+				foreground: "var(--foreground)",
+			},
+			screens: {
+				'portrait': {'raw': '(orientation: portrait)'},
+				// => @media (orientation: portrait) { ... }
+				'landscape': {'raw': '(orientation: landscape)'},
+			}
+    	},
+  	},
   plugins: [],
 };
 export default config;

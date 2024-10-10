@@ -43,12 +43,12 @@ interface Prop {
 	className?: string;
 }
 
-export default function MoonPhase({className} : Prop) {
+export default function MoonPhase({ className }: Prop) {
 	return (
 		<FlexColumn className={className ?? ""}>
 			<SmallHeader className={stylesStrings.moonHeader} >Moon Phase</SmallHeader>
 			<FlexColumn className={stylesStrings.contentContainer}>
-			<Flex className={stylesStrings.moonPhaseContainer}>
+				<Flex className={stylesStrings.moonPhaseContainer}>
 					<ImageGroup
 						path="/moon_phases"
 						imageNames={moonPhases.map((phase, indx) => phase.replaceAll(" ", "_"))}
@@ -67,8 +67,8 @@ export default function MoonPhase({className} : Prop) {
 						repeatAmount={8}
 					/>
 				</Flex>
-				<hr className="absolute bottom-0 border-t-4 w-full"/>
+				<hr className="absolute bottom-0 border-t-4 w-full" />
 			</FlexColumn>
 		</FlexColumn>
-  )
+	)
 }

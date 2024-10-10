@@ -20,7 +20,8 @@ const config: Config = {
 			screens: {
 				'portrait': {'raw': '(orientation: portrait)'},
 				// => @media (orientation: portrait) { ... }
-				'landscape': {'raw': '(orientation: landscape)'},
+				'landscape': { 'raw': '(orientation: landscape)' },
+				'thin': {'raw': '(min-aspect-ratio: 1/1)'}
 			}
     	},
   	},

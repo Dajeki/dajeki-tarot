@@ -1,38 +1,74 @@
-import Flex from "../util/flex-container";
+import generateStyles from "@/app/utils/style-helper";
+import { Flex, FlexColumn } from "../util/flex-container";
 import ImageGroup from "../util/image-group";
+import SmallHeader from "../util/small-component-header";
 
 const moonPhases = ["New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous", "Full Moon", "Waning Gibbous", "Third Quarter", "Waning Crescent"];
-const componentStyles = {
 
+const styles = {
+	moonHeader: {
+		thin: "thin:text-[20px]",
+		base: "h-1/4 text-[2.5vh]"
+	},
+	contentContainer: {
+		base: "h-4/5 relative",
+	},
+	moonPhaseContainer: {
+		base: "h-4/5",
+	},
+	phaseIcons: {
+		base: "w-[calc(100%/(8))]"
+	},
+	selectIconContainer: {
+		base: "h-1/5"
+	},
+	selectIcon: {
+		base: "invert max-w-full max-h-full m-auto"
+	},
+	selectIconWrapper: {
+		base: "w-[calc(100%/8)]"
+	}
+}
+const stylesStrings = {
+	moonHeader: generateStyles(styles.moonHeader),
+	contentContainer: generateStyles(styles.contentContainer),
+	moonPhaseContainer: generateStyles(styles.moonPhaseContainer),
+	phaseIcons: generateStyles(styles.phaseIcons),
+	selectIconContainer: generateStyles(styles.selectIconContainer),
+	selectIcon: generateStyles(styles.selectIcon),
+	selectIconWrapper: generateStyles(styles.selectIconWrapper),
 }
 
-export default function MoonPhase() {
+interface Prop {
+	className?: string;
+}
+
+export default function MoonPhase({className} : Prop) {
 	return (
-		<Flex className="flex-col h-1/5">
-			<h3 className="font-serif h-1/4">Moon Phase</h3>
-			<Flex className="flex-col h-4/5">
-				<Flex className="h-4/5">
+		<FlexColumn className={className ?? ""}>
+			<SmallHeader className={stylesStrings.moonHeader} >Moon Phase</SmallHeader>
+			<FlexColumn className={stylesStrings.contentContainer}>
+			<Flex className={stylesStrings.moonPhaseContainer}>
 					<ImageGroup
 						path="/moon_phases"
 						imageNames={moonPhases.map((phase, indx) => phase.replaceAll(" ", "_"))}
 						includeIndx={true}
 						imageType="svg"
-						className="w-[calc(100%/(8*3))]"
-						repeatAmount={3}
+						className={stylesStrings.phaseIcons}
 					/>
 				</Flex>
-				<Flex className="h-1/5">
+				<Flex className={stylesStrings.selectIconContainer}>
 					<ImageGroup
 						imageNames="triangle"
-						className="invert max-h-full"
+						className={stylesStrings.selectIcon}
 						wrapDiv={true}
 						center={true}
-						wrapClassName="w-[calc(100%/8)]"
+						wrapClassName={stylesStrings.selectIconWrapper}
 						repeatAmount={8}
 					/>
 				</Flex>
-				<hr className=""/>
-			</Flex>
-		</Flex>
+				<hr className="absolute bottom-0 border-t-4 w-full"/>
+			</FlexColumn>
+		</FlexColumn>
   )
 }

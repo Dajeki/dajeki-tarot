@@ -1,5 +1,5 @@
 import React from 'react'
-import Flex from './flex-container';
+import { Flex } from './flex-container';
 
 interface Props {
 	imageNames: string[] | string;

@@ -5,8 +5,8 @@ interface Prop {
 	className?: string;
 }
 
-export default function SmallComponentHeader({children, className}: Prop) {
+export default function SmallHeader({children, className}: Prop) {
   return (
-	<div>small-component-header</div>
+	  <h3 className={"font-serif align-middle " + className ?? ""}>{children}</h3>
   )
 }

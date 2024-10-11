@@ -6,6 +6,11 @@
 @tailwind utilities;
 
 
+@layer base {
+	.font-outline-5 {
+		text-shadow: -5px -5px 0 black, 5px -5px 0 black, -5px 5px 0 black, 5px 5px 0 black;
+	}
+}
 
 :root {
 	--background: #ffffff;

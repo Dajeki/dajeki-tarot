@@ -1,10 +1,10 @@
 "use client";
-
 import React from 'react'
 import { Flex, FlexColumn } from '../util/flex-container'
 import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 import "./spread-selector.css";
+import { pre } from 'framer-motion/client';
 
 const itemVariants: Variants = {
 	open: {
@@ -15,23 +15,46 @@ const itemVariants: Variants = {
 	closed: { opacity: 0, y: 20, transition: { duration: 0.2 } }
 };
 
+interface Props {
+	options: { label: string, value: string }[];
+}
 
-export default function SpreadSelector() {
+export default function SpreadSelector({ options }: Props) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [selected, setSelected] = useState("Select Spread");
+	const [prevSelected, setPrevSelected] = useState("");
 
+	console.log(prevSelected === selected);
 	return (
-		<FlexColumn className='items-center relative'>
+		<FlexColumn className='items-center relative h-1/5'>
 			<motion.nav
 				initial={false}
-				animate={isOpen ? "open" : "closed"}
-				className="flex items-center justify-center w-full h-1/5"
+				animate={isOpen ? "open" : ["closed", prevSelected !== selected ? "changed" : ""]}
+				className="flex items-center justify-center w-full h-full"
 			>
 				<motion.button
 					whileTap={{ scale: 0.97 }}
 					onClick={() => setIsOpen(!isOpen)}
-					className='font-serif flex items-center justify-center content-between text-7xl w-3/5 h-4/5'
+					className='font-serif flex items-center justify-center content-between text-7xl w-3/5 h-3/5'
+					role='combobox'
+					aria-haspopup="listbox"
+					aria-expanded={isOpen}
+					aria-controls="spread-options"
 				>
-					<Flex center>Menu</Flex>
+					<motion.div
+						className="w-full flex items-center justify-center leading-[3.5rem] text-8xl font-outline-5"
+						initial={{ opacity: 1, scale: 1 }}
+						variants={{
+							changed: { opacity: [0, 1], scale: [0, 1] }
+						}}
+						transition={{
+							duration: 2,
+							delay: 0.5,
+							ease: [0, 0.71, 0.2, 1.01]
+						}}
+					>
+						{selected}
+					</motion.div>
 					<motion.div
 						variants={{
 							open: { rotate: 180 },
@@ -72,12 +95,27 @@ export default function SpreadSelector() {
 				className='absolute top-full w-3/5'
 				initial={false}
 				animate={isOpen ? "open" : "closed"}
+				role="listbox"
+				id="spread-options"
 			>
-				<motion.li variants={itemVariants}>Item 1 </motion.li>
-				<motion.li variants={itemVariants}>Item 2 </motion.li>
-				<motion.li variants={itemVariants}>Item 3 </motion.li>
-				<motion.li variants={itemVariants}>Item 4 </motion.li>
-				<motion.li variants={itemVariants}>Item 5 </motion.li>
+				{
+					options?.map(({ label, value }) => {
+						return (
+							<motion.li
+								variants={itemVariants}
+								aria-label={label}
+								aria-selected={selected === value}
+								onClick={() => {
+									setPrevSelected(selected);
+									setSelected(value);
+									setIsOpen(!isOpen);
+								}}
+								className={selected === value ? "border-4 border-black rounded-[10px] box-border" : "border-4 border-white"}>
+								{label}
+							</motion.li>
+						)
+					})
+				}
 			</motion.ul>
 		</FlexColumn>
 	);
